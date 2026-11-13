@@ -118,6 +118,8 @@ jobs:
 
   screenshots:
     name: Screenshots (demo data, three sizes)
+    # After tests, so a failed build doesn't spend Mac minutes twice.
+    needs: test
     runs-on: macos-15
     timeout-minutes: 60
     permissions:
