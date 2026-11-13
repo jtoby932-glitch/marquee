@@ -6,7 +6,7 @@ import SwiftData
 /// in-memory `items` snapshot instead of querying the database while rendering.
 @MainActor @Observable
 final class LibraryStore {
-    private(set) var items: [LibraryItem] = []
+    private(set) var items: [LibraryTitle] = []
     private(set) var lastError: AppError?
     let context: ModelContext
     private let now: () -> Date
@@ -20,12 +20,12 @@ final class LibraryStore {
 
     // MARK: Reading
 
-    var activeItems: [LibraryItem] { items.filter { $0.deletedAt == nil } }
-    var recentlyDeleted: [LibraryItem] {
+    var activeItems: [LibraryTitle] { items.filter { $0.deletedAt == nil } }
+    var recentlyDeleted: [LibraryTitle] {
         items.filter { $0.deletedAt != nil }.sorted { ($0.deletedAt ?? .distantPast) > ($1.deletedAt ?? .distantPast) }
     }
 
-    func item(_ uid: String) -> LibraryItem? { items.first { $0.uid == uid && $0.deletedAt == nil } }
+    func item(_ uid: String) -> LibraryTitle? { items.first { $0.uid == uid && $0.deletedAt == nil } }
 
     func counts() -> [MediaKind: Int] {
         Dictionary(grouping: activeItems, by: \.kind).mapValues(\.count)
@@ -177,9 +177,9 @@ final class LibraryStore {
         items = allTitles().compactMap(Self.item(from:))
     }
 
-    static func item(from title: Title) -> LibraryItem? {
+    static func item(from title: Title) -> LibraryTitle? {
         guard let entry = title.entry, let kind = MediaKind(rawValue: title.kindRaw) else { return nil }
-        return LibraryItem(
+        return LibraryTitle(
             uid: title.uid, kind: kind, name: title.name, year: title.year, creators: title.creators,
             genres: title.genres, overview: title.overview, runtimeMinutes: title.runtimeMinutes,
             pageCount: title.pageCount, posterURL: title.posterPath.flatMap(URL.init(string:)),

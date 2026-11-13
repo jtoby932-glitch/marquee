@@ -87,7 +87,7 @@ struct PosterContent: Hashable {
     var progress: Double?
     let accessibilityLabel: String
 
-    init(_ item: LibraryItem) {
+    init(_ item: LibraryTitle) {
         uid = item.uid
         kind = item.kind
         name = item.name

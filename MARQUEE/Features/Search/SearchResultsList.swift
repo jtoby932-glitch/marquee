@@ -90,7 +90,7 @@ struct SearchResultsList: View {
 struct SearchResultRow: View {
     @Environment(\.theme) private var theme
     let result: SearchResult
-    let existing: LibraryItem?
+    let existing: LibraryTitle?
     let onOpen: () -> Void
     let onAdd: () -> Void
 
@@ -162,7 +162,7 @@ struct TypeBadge: View {
 /// A compact library row, used by offline search and lists.
 struct LibraryRow: View {
     @Environment(\.theme) private var theme
-    let item: LibraryItem
+    let item: LibraryTitle
 
     var body: some View {
         HStack(spacing: Space.s) {

@@ -2,7 +2,7 @@ import Foundation
 
 /// A plain value copy of a Title and my Entry for it. Screens read these from
 /// `LibraryStore`'s snapshot, so they never query the database while rendering.
-struct LibraryItem: Identifiable, Hashable {
+struct LibraryTitle: Identifiable, Hashable {
     let uid: String
     let kind: MediaKind
     var name: String
@@ -67,7 +67,7 @@ struct LibraryQuery: Equatable {
     var sort: LibrarySort = .added
     var text: String = ""
 
-    func apply(to items: [LibraryItem]) -> [LibraryItem] {
+    func apply(to items: [LibraryTitle]) -> [LibraryTitle] {
         let needle = text.trimmingCharacters(in: .whitespacesAndNewlines)
         let filtered = items.filter { item in
             guard item.deletedAt == nil else { return false }
@@ -85,7 +85,7 @@ struct LibraryQuery: Equatable {
 
 extension LibrarySort {
     /// Newest, highest and A→Z first; ties fall back to the title so order is stable.
-    var comparator: (LibraryItem, LibraryItem) -> Bool {
+    var comparator: (LibraryTitle, LibraryTitle) -> Bool {
         switch self {
         case .added:
             return { a, b in a.addedAt != b.addedAt ? a.addedAt > b.addedAt : LibrarySort.byTitle(a, b) }
@@ -107,7 +107,7 @@ extension LibrarySort {
         }
     }
 
-    static func byTitle(_ a: LibraryItem, _ b: LibraryItem) -> Bool {
+    static func byTitle(_ a: LibraryTitle, _ b: LibraryTitle) -> Bool {
         let order = sortKey(a.name).localizedStandardCompare(sortKey(b.name))
         return order == .orderedSame ? a.uid < b.uid : order == .orderedAscending
     }

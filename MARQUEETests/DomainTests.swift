@@ -49,8 +49,8 @@ final class TitleUIDTests: XCTestCase {
 
 final class LibraryQueryTests: XCTestCase {
     private func item(_ uid: String, _ name: String, kind: MediaKind = .film, status: EntryStatus = .finished,
-                      rating: Int? = nil, year: Int? = nil, added: Double = 0, finished: Double? = nil, deleted: Bool = false) -> LibraryItem {
-        LibraryItem(uid: uid, kind: kind, name: name, year: year, creators: ["Someone"], genres: [], overview: "",
+                      rating: Int? = nil, year: Int? = nil, added: Double = 0, finished: Double? = nil, deleted: Bool = false) -> LibraryTitle {
+        LibraryTitle(uid: uid, kind: kind, name: name, year: year, creators: ["Someone"], genres: [], overview: "",
                     runtimeMinutes: nil, pageCount: nil, posterURL: nil, backdropURL: nil, status: status, rating: rating,
                     isFavourite: false, addedAt: Date(timeIntervalSince1970: added),
                     finishedAt: finished.map { Date(timeIntervalSince1970: $0) }, currentPage: nil,
@@ -180,8 +180,8 @@ final class MetaLineTests: XCTestCase {
 
 final class HomeSectionsTests: XCTestCase {
     func testGroupsAndHidesDisabledKinds() {
-        func item(_ uid: String, _ kind: MediaKind, _ status: EntryStatus, added: Double) -> LibraryItem {
-            LibraryItem(uid: uid, kind: kind, name: uid, year: nil, creators: [], genres: [], overview: "", runtimeMinutes: nil,
+        func item(_ uid: String, _ kind: MediaKind, _ status: EntryStatus, added: Double) -> LibraryTitle {
+            LibraryTitle(uid: uid, kind: kind, name: uid, year: nil, creators: [], genres: [], overview: "", runtimeMinutes: nil,
                         pageCount: nil, posterURL: nil, backdropURL: nil, status: status, rating: nil, isFavourite: false,
                         addedAt: Date(timeIntervalSince1970: added), finishedAt: nil, currentPage: nil, deletedAt: nil, detailsPending: false)
         }

@@ -17,7 +17,7 @@ struct TitleDetailView: View {
     @State private var overviewExpanded = false
     @State private var confirmRemove = false
 
-    private var item: LibraryItem? { library.item(uid) }
+    private var item: LibraryTitle? { library.item(uid) }
     private var display: DetailDisplay { DetailDisplay(uid: uid, item: item, seed: router.seeds[uid], details: details) }
 
     var body: some View {

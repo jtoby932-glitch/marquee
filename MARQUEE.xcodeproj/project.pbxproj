@@ -67,9 +67,9 @@
 		B6CAF1A620F41ED8CD5CD3B5 = {isa = PBXBuildFile; fileRef = E68EE98D06E5BA5C665EBF3F;};
 		B8BA7823B76F913A6B697099 = {isa = PBXBuildFile; fileRef = C61A18DE1A7998149EC0D950;};
 		BC45C7E40FFC96862B98B090 = {isa = PBXBuildFile; fileRef = E8711EC361352AF0C67D44FD;};
+		BE4EA9A19B3A328A6DBA51C8 = {isa = PBXBuildFile; fileRef = 2691F782D4C1225A28F4A634;};
 		BEF2F02B0C4CB0FFADAF96F8 = {isa = PBXBuildFile; fileRef = 9FC5A0E2FC91150F6F1D226E;};
 		C4546383166A0E7ADF6FA5BA = {isa = PBXBuildFile; fileRef = 0E8BF99D41AD8BEBB1DE1669;};
-		CA173C5DD82BB541C511EAAB = {isa = PBXBuildFile; fileRef = 1A7FE6B528EA352F887DFA0E;};
 		CB479F7CEC563E220904F6BA = {isa = PBXBuildFile; fileRef = 43CDB0CBB4B0FBE02041B58D;};
 		D527B9BEF8017C1526F79E9C = {isa = PBXBuildFile; fileRef = 7687B15A5AB9F1DE41CC4957;};
 		D5EC089FC707A20F99A76E3B = {isa = PBXBuildFile; fileRef = A5AC90E60C642D6D7FF68B08;};
@@ -100,8 +100,8 @@
 		13C87503EDBE5C4325851BD1 = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-library.json"; sourceTree = "<group>";};
 		145DDCEB3FD0F24021032004 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMath.swift; sourceTree = "<group>";};
 		1A128BFA68EB91638BDE40D2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>";};
-		1A7FE6B528EA352F887DFA0E = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryItem.swift; sourceTree = "<group>";};
 		1F38412576E63B817A90674C = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MARQUEEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR;};
+		2691F782D4C1225A28F4A634 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTitle.swift; sourceTree = "<group>";};
 		275648C4D13DF692A645437C = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHost.swift; sourceTree = "<group>";};
 		2C688CEC8CED1ED825A7157F = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsReport.swift; sourceTree = "<group>";};
 		2FAC1EAA260762A55D510229 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaV1.swift; sourceTree = "<group>";};
@@ -314,7 +314,7 @@
 				2C688CEC8CED1ED825A7157F,
 				3214AE064CC16A8A06341F3B,
 				FB3C84409EBDDE6AC772924F,
-				1A7FE6B528EA352F887DFA0E,
+				2691F782D4C1225A28F4A634,
 				94710EAF62E4EDABB53261C9,
 				D76B76A5F9B223780995FAE5,
 				78B1189167BCB88F2D42E9BF,
@@ -408,7 +408,7 @@
 				00E6ECE9A62F415A0796E3FB,
 				B437290C3E31476FF230CA92,
 				77B61C82C4CAC6868AB3EEF4,
-				CA173C5DD82BB541C511EAAB,
+				BE4EA9A19B3A328A6DBA51C8,
 				96286143D01E6A4B6F7AE889,
 				868E60689700E0A2CBF2D88C,
 				EC1D0102995DA67DA1178712,

@@ -69,7 +69,7 @@ enum SearchRanking {
     }
 
     /// Offline fallback: searches my own library by title and creator.
-    static func libraryMatches(_ items: [LibraryItem], query: String, filter: SearchFilter) -> [LibraryItem] {
+    static func libraryMatches(_ items: [LibraryTitle], query: String, filter: SearchFilter) -> [LibraryTitle] {
         LibraryQuery(kind: filter.kind, status: nil, sort: .title, text: query).apply(to: items)
     }
 }

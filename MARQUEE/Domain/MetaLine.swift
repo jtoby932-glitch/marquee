@@ -18,7 +18,7 @@ enum MetaLine {
         return parts.joined(separator: " · ")
     }
 
-    static func make(_ item: LibraryItem) -> String {
+    static func make(_ item: LibraryTitle) -> String {
         make(kind: item.kind, year: item.year, runtimeMinutes: item.runtimeMinutes, pageCount: item.pageCount, genre: item.genres.first)
     }
 

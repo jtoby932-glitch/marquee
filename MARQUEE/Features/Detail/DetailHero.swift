@@ -16,9 +16,9 @@ struct DetailDisplay {
     let backdropURL: URL?
     let certificate: String?
     let seed: SearchResult?
-    let item: LibraryItem?
+    let item: LibraryTitle?
 
-    init(uid: String, item: LibraryItem?, seed: SearchResult?, details: TitleDetails?) {
+    init(uid: String, item: LibraryTitle?, seed: SearchResult?, details: TitleDetails?) {
         self.uid = uid
         self.item = item
         self.seed = seed

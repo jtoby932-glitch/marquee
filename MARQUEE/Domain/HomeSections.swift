@@ -6,14 +6,14 @@ struct HomeSections {
         let id: String
         let eyebrow: String
         let title: String
-        let items: [LibraryItem]
+        let items: [LibraryTitle]
         let status: EntryStatus?
     }
 
-    let continueItem: LibraryItem?
+    let continueItem: LibraryTitle?
     let rows: [Row]
 
-    init(items: [LibraryItem], enabledKinds: Set<MediaKind>) {
+    init(items: [LibraryTitle], enabledKinds: Set<MediaKind>) {
         let visible = items.filter { enabledKinds.contains($0.kind) && $0.deletedAt == nil }
         let inProgress = visible.filter { $0.status == .inProgress }.sorted { $0.addedAt > $1.addedAt }
         continueItem = inProgress.first

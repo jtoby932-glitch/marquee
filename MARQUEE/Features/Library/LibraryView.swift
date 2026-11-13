@@ -142,7 +142,7 @@ struct RecentlyDeletedView: View {
     @Environment(\.theme) private var theme
     @Environment(LibraryStore.self) private var library
     @Environment(ToastCenter.self) private var toasts
-    @State private var confirmDelete: LibraryItem?
+    @State private var confirmDelete: LibraryTitle?
 
     var body: some View {
         List {

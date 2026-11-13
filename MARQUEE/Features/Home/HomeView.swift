@@ -157,7 +157,7 @@ struct PosterRow: View {
 struct ContinueCard: View {
     @Environment(\.theme) private var theme
     @Environment(Router.self) private var router
-    let item: LibraryItem
+    let item: LibraryTitle
 
     var body: some View {
         Button { router.push(.title(uid: item.uid), on: .home) } label: {
