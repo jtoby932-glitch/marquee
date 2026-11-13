@@ -87,9 +87,10 @@ final class JourneyTests: XCTestCase {
         let row = app.buttons["search.result.ol-OL893415W"]
         XCTAssertTrue(row.waitForExistence(timeout: 8))
         row.swipeRight()
-        let wantTo = app.buttons["Want to read"]
+        // A short swipe reveals the action; a long one adds straight away.
+        let wantTo = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Want to read")).firstMatch
         if wantTo.waitForExistence(timeout: 2) { wantTo.tap() }
-        XCTAssertTrue(app.buttons["toast.undo"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["toast.undo"].waitForExistence(timeout: 5), "Swipe right adds to Want to read")
     }
 
     /// Offline: search says so and looks in my library instead.
@@ -111,9 +112,9 @@ final class JourneyTests: XCTestCase {
         app.buttons["home.avatar"].tapCentre()
         let about = app.buttons["settings.about"]
         XCTAssertTrue(app.scrollUntilVisible(about), "About is at the bottom of Settings")
-        about.tap()
+        about.tapCentre()
         let version = app.buttons["about.version"]
-        XCTAssertTrue(version.waitForExistence(timeout: 5))
+        XCTAssertTrue(version.waitForExistence(timeout: 10), "About opens")
         for _ in 0..<6 { version.tap() }
         XCTAssertFalse(app.navigationBars["Diagnostics"].exists)
         version.tap()

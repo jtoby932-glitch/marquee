@@ -9,3 +9,6 @@ Severity: **P0** crash or data loss · **P1** broken feature · **P2** visual or
 | 3 | M1 self-review | P2 | Brief's tertiary text colours (e.g. `#6E6C67` on Cinema) fail WCAG AA (3.7:1). | Fixed: lightened per Look; contrast test |
 | 4 | M1 self-review | P2 | Neon's violet accent fails AA as text (4.0:1). | Fixed: solid accent `#A78BFA` for text, gradient unchanged |
 | 5 | M1 self-review | P3 | Bulb icon concept crowded at the top corners of the M. | Fixed: bulbs placed explicitly |
+| 6 | CI run 6 | P2 | Search screen audit: "Text clipped" on 8 elements and "Dynamic Type partially unsupported" on 8 (years, eyebrows) | Open — next build |
+| 7 | CI run 6 | P2 | Audits on Home, Library, Detail, Settings, About don't complete in time on CI | Open — audits moved to a non-blocking job |
+| 8 | CI run 4 | P1 | UI journeys couldn't tap bar items (scroll-to-visible failed) or reach About below the fold | Fixed: coordinate taps, scroll helper |
