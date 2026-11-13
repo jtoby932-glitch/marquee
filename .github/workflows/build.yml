@@ -58,6 +58,12 @@ jobs:
           echo "::group::Last 120 lines"
           grep -v "CoreData" test.log | tail -120
           echo "::endgroup::"
+          echo "::group::Steps of failing tests"
+          for t in $(grep -E "^Test Case .* failed" test.log | sed -E "s/.*\[[A-Za-z]+\.[A-Za-z]+ ([A-Za-z0-9_]+)\].*/\1/" | sort -u); do
+            echo "== $t"
+            awk -v t="$t" '$0 ~ t"\]. started" {p=1} p && /t = / {print} $0 ~ t"\]. failed" {p=0}' test.log | head -60
+          done
+          echo "::endgroup::"
           echo "::group::Summary"
           grep -E "Test Case .* (passed|failed)|Executed" test.log | tail -80
           echo "::endgroup::"

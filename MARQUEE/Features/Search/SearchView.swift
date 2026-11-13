@@ -32,8 +32,12 @@ struct SearchView: View {
                 m.queryChanged()
                 router.pendingSearchQuery = nil
             }
-            fieldFocused = LaunchOptions.current.screen == nil
+            fieldFocused = router.tab == .search && LaunchOptions.current.screen == nil
             await m.loadDiscovery()
+        }
+        .onChange(of: router.tab) {
+            // Search opens with the keyboard up; leaving it puts the keyboard away.
+            fieldFocused = router.tab == .search && (model?.trimmedQuery.isEmpty ?? true)
         }
         .onChange(of: router.searchFocusRequest) {
             if let pending = router.pendingSearchQuery {

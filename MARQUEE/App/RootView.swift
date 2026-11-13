@@ -43,17 +43,22 @@ struct TabsView: View {
     @Environment(ToastCenter.self) private var toasts
 
     var body: some View {
-        @Bindable var router = router
-        TabView(selection: $router.tab) {
+        // Our own container instead of TabView: TabView doesn't pass the custom
+        // bar's safe-area inset to its children, so list ends slid under the bar.
+        // Every stack stays alive so each tab keeps its place.
+        ZStack {
             ForEach(FeatureFlags.visibleTabs) { tab in
+                let selected = router.tab == tab
                 NavigationStack(path: router.path(tab)) {
                     root(for: tab)
                         .navigationDestination(for: Route.self) { route in
                             destination(route)
                         }
                 }
-                .tag(tab)
-                .toolbar(.hidden, for: .tabBar)
+                .opacity(selected ? 1 : 0)
+                .allowsHitTesting(selected)
+                .accessibilityHidden(!selected)
+                .zIndex(selected ? 1 : 0)
             }
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {

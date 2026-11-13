@@ -83,7 +83,8 @@ final class JourneyTests: XCTestCase {
         let field = app.textFields["search.field"]
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap()
-        field.typeText("dune")
+        field.typeText("dune\n")
+        app.buttons["search.filter.books"].tapCentre()
         let result = app.buttons["search.result.ol-OL893415W"]
         XCTAssertTrue(result.waitForExistence(timeout: 8))
         // Swipe the list cell itself, not the button inside it.
