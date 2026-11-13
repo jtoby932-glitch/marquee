@@ -61,7 +61,7 @@ struct PosterCard: View {
                 .padding(.horizontal, 6)
                 .padding(.vertical, 3)
                 .foregroundStyle(theme.star)
-                .background(.black.opacity(0.62), in: Capsule())
+                .background(.black.opacity(0.85), in: Capsule())
             }
             Spacer(minLength: 0)
             if let progress = item.progress {
@@ -72,6 +72,16 @@ struct PosterCard: View {
             }
         }
         .padding(6)
+    }
+}
+
+extension View {
+    /// Makes a tappable poster one VoiceOver element with the full description,
+    /// so clamped titles and artwork text inside it aren't read (or audited) piecemeal.
+    func posterAccessibility(_ label: String) -> some View {
+        accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(label))
+            .accessibilityAddTraits(.isButton)
     }
 }
 

@@ -123,6 +123,7 @@ struct MarqueeTabBar: View {
                     Haptics.selection()
                     router.quickAdd()
                 })
+                .accessibilityShowsLargeContentViewer()
                 .accessibilityIdentifier("tab.\(tab.rawValue)")
                 .accessibilityLabel(Text(tab.title))
                 .accessibilityAddTraits(selected ? [.isSelected, .isButton] : .isButton)

@@ -31,9 +31,17 @@ enum DemoData {
         return records
     }
 
-    static func seed(into context: ModelContext, now: Date, bundle: Bundle = .main) {
+    static func seed(into context: ModelContext, now: Date, bundle: Bundle = .main, limit: Int? = nil) {
         let calendar = AppCalendar.calendar()
-        for record in records(bundle: bundle) {
+        var chosen = records(bundle: bundle)
+        if let limit {
+            // A mix of every kind: half films, a quarter each shows and books.
+            let films = chosen.filter { $0.kind == "film" }.prefix(limit / 2)
+            let shows = chosen.filter { $0.kind == "show" }.prefix(limit / 4)
+            let books = chosen.filter { $0.kind == "book" }.prefix(limit / 4)
+            chosen = Array(films) + Array(shows) + Array(books)
+        }
+        for record in chosen {
             guard let kind = MediaKind(rawValue: record.kind) else { continue }
             let title = Title(uid: record.uid, kind: kind, name: record.name)
             title.year = record.year

@@ -143,6 +143,7 @@ struct PosterRow: View {
                             }
                         }
                         .buttonStyle(PressableStyle())
+                        .posterAccessibility(item.accessibilityDescription)
                         .accessibilityIdentifier("home.\(row.id).\(item.uid)")
                     }
                 }
@@ -202,8 +203,7 @@ struct ContinueCard: View {
             .overlay(RoundedRectangle(cornerRadius: Radius.card, style: .continuous).strokeBorder(theme.stroke, lineWidth: 1))
         }
         .buttonStyle(PressableStyle())
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text("Continue: \(item.accessibilityDescription)"))
+        .posterAccessibility(String(localized: "Continue: \(item.accessibilityDescription)"))
         .accessibilityIdentifier("home.continue")
     }
 }

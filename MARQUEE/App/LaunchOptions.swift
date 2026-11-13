@@ -4,6 +4,8 @@ import Foundation
 /// real library: `-demoData` and `-freshStore` both use an in-memory store.
 struct LaunchOptions {
     var demoData = false
+    /// A 40-title demo library, so accessibility audits finish in time.
+    var demoSmall = false
     var freshStore = false
     var stubNetwork = false
     var offline = false
@@ -21,7 +23,8 @@ struct LaunchOptions {
             guard let i = arguments.firstIndex(of: flag), i + 1 < arguments.count else { return nil }
             return arguments[i + 1]
         }
-        demoData = arguments.contains("-demoData")
+        demoSmall = arguments.contains("-demoSmall")
+        demoData = arguments.contains("-demoData") || demoSmall
         freshStore = arguments.contains("-freshStore")
         stubNetwork = arguments.contains("-stubNetwork") || demoData
         offline = arguments.contains("-offline")

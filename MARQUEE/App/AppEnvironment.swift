@@ -57,7 +57,7 @@ final class AppEnvironment {
         let container = try MarqueeStore.makeContainer(inMemory: options.usesInMemoryStore)
         let context = container.mainContext
         if options.demoData {
-            DemoData.seed(into: context, now: now())
+            DemoData.seed(into: context, now: now(), limit: options.demoSmall ? 40 : nil)
         }
         let library = LibraryStore(context: context, now: now)
         let preferences = PreferencesStore(context: context, overrideLook: options.look)

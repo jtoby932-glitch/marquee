@@ -47,6 +47,7 @@ struct LibraryView: View {
                                 }
                                 .buttonStyle(PressableStyle())
                                 .appear(index)
+                                .posterAccessibility(item.accessibilityDescription)
                                 .accessibilityIdentifier("library.poster.\(item.uid)")
                             }
                         }

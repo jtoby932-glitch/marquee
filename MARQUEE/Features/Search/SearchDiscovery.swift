@@ -66,6 +66,7 @@ struct DiscoveryRow: View {
                             }
                         }
                         .buttonStyle(PressableStyle())
+                        .posterAccessibility(PosterContent(result).accessibilityLabel)
                         .accessibilityIdentifier("search.\(id).\(result.uid)")
                     }
                 }
