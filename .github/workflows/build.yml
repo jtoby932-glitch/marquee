@@ -1,0 +1,161 @@
+name: Build MARQUEE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: marquee-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TMDB_READ_TOKEN: ${{ secrets.TMDB_READ_TOKEN }}
+
+jobs:
+  test:
+    name: Tests (unit, UI journeys, accessibility audits)
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Xcode version
+        run: xcodebuild -version
+
+      - name: Project matches the generator
+        run: |
+          python3 tools/write_secrets.py
+          python3 tools/gen_xcodeproj.py
+          git diff --exit-code -- MARQUEE.xcodeproj
+
+      - name: Lint
+        run: python3 tools/lint.py
+
+      - name: Pick a simulator
+        id: sim
+        run: echo "udid=$(python3 tools/pick_simulator.py standard)" >> "$GITHUB_OUTPUT"
+
+      - name: Run tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project MARQUEE.xcodeproj \
+            -scheme MARQUEE \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -resultBundlePath TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee test.log | grep -E "error:|warning: .*MARQUEE/|Test Case .* (passed|failed)|Executed|BUILD|TEST" || true
+          grep -q "TEST SUCCEEDED" test.log
+
+      - name: Upload test log and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            test.log
+            TestResults.xcresult
+          retention-days: 14
+
+  ipa:
+    name: Unsigned IPA and release
+    needs: test
+    runs-on: macos-15
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build for device (unsigned)
+        run: |
+          set -o pipefail
+          python3 tools/write_secrets.py
+          xcodebuild build \
+            -project MARQUEE.xcodeproj \
+            -scheme MARQUEE \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath build \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            2>&1 | tee build.log | grep -E "error:|warning: .*MARQUEE/|BUILD" || true
+          grep -q "BUILD SUCCEEDED" build.log
+
+      - name: Check the alternate icons are in the bundle
+        run: |
+          APP=build/Build/Products/Release-iphoneos/MARQUEE.app
+          plutil -p "$APP/Info.plist" | tee info.txt | grep -E "CFBundleAlternateIcons|AppIcon-Bulbs|AppIcon-Ticket"
+          grep -q "AppIcon-Bulbs" info.txt && grep -q "AppIcon-Ticket" info.txt
+          grep -q "com.savonstudios.marquee" info.txt
+
+      - name: Package MARQUEE.ipa
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/MARQUEE.app Payload/
+          zip -qry MARQUEE.ipa Payload
+          ls -lh MARQUEE.ipa
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(python3 -c "import re;print(re.search(r'VERSION = \"([^\"]+)\"', open('tools/gen_xcodeproj.py').read()).group(1))")
+          python3 tools/changelog_section.py "$VERSION" > notes.md
+          printf "\n\nUnsigned build %s of %s. Install with Sideloadly or AltStore. All tests passed.\n" "${{ github.run_number }}" "${GITHUB_SHA::7}" >> notes.md
+          gh release create "v${VERSION}-b${{ github.run_number }}" MARQUEE.ipa \
+            --title "MARQUEE ${VERSION} (build ${{ github.run_number }})" \
+            --notes-file notes.md \
+            --target "$GITHUB_SHA" --latest
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: MARQUEE-ipa
+          path: MARQUEE.ipa
+
+  screenshots:
+    name: Screenshots (demo data, three sizes)
+    runs-on: macos-15
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build for simulator (Debug)
+        run: |
+          set -o pipefail
+          python3 tools/write_secrets.py
+          xcodebuild build \
+            -project MARQUEE.xcodeproj \
+            -scheme MARQUEE \
+            -configuration Debug \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee build.log | grep -E "error:|BUILD" || true
+          grep -q "BUILD SUCCEEDED" build.log
+
+      - name: Capture screens
+        run: |
+          APP=build/Build/Products/Debug-iphonesimulator/MARQUEE.app
+          for size in standard small max; do
+            UDID=$(python3 tools/pick_simulator.py $size)
+            bash tools/screenshots.sh "$UDID" "$APP" shots "$size" full
+            if [ "$size" = "standard" ]; then bash tools/screenshots.sh "$UDID" "$APP" shots "$size" ax; fi
+            xcrun simctl shutdown "$UDID" || true
+          done
+          cp docs/icons/*.png shots/ 2>/dev/null || true
+
+      - name: Publish screenshots branch
+        run: |
+          cd shots
+          git init -q -b ci-screenshots
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -qm "Screenshots for ${GITHUB_SHA::7} (run ${{ github.run_number }})"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-screenshots

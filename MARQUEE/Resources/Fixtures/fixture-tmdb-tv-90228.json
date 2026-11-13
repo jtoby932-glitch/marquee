@@ -1,0 +1,26 @@
+{
+ "id": 90228,
+ "name": "Dune: Prophecy",
+ "original_name": "Dune: Prophecy",
+ "first_air_date": "2024-11-17",
+ "overview": "Ten thousand years before the ascension of Paul Atreides, two Harkonnen sisters combat forces that threaten the future of humankind.",
+ "episode_run_time": [
+  60
+ ],
+ "genres": [
+  {
+   "id": 10765,
+   "name": "Sci-Fi & Fantasy"
+  }
+ ],
+ "poster_path": null,
+ "backdrop_path": null,
+ "created_by": [
+  {
+   "name": "Diane Ademu-John"
+  }
+ ],
+ "status": "Returning Series",
+ "number_of_seasons": 1,
+ "next_episode_to_air": null
+}

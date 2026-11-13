@@ -1,0 +1,41 @@
+{
+ "works": [
+  {
+   "key": "/works/OL893415W",
+   "title": "Dune",
+   "author_name": [
+    "Frank Herbert"
+   ],
+   "first_publish_year": 1965,
+   "cover_i": null,
+   "edition_count": 290
+  },
+  {
+   "key": "/works/OL17860744W",
+   "title": "Project Hail Mary",
+   "author_name": [
+    "Andy Weir"
+   ],
+   "first_publish_year": 2021,
+   "edition_count": 40
+  },
+  {
+   "key": "/works/OL20893680W",
+   "title": "Piranesi",
+   "author_name": [
+    "Susanna Clarke"
+   ],
+   "first_publish_year": 2020,
+   "edition_count": 30
+  },
+  {
+   "key": "/works/OL27448W",
+   "title": "The Lord of the Rings",
+   "author_name": [
+    "J. R. R. Tolkien"
+   ],
+   "first_publish_year": 1954,
+   "edition_count": 200
+  }
+ ]
+}

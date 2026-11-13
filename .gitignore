@@ -1,0 +1,11 @@
+build/
+DerivedData/
+*.xcresult
+Payload/
+*.ipa
+xcuserdata/
+.DS_Store
+tools/__pycache__/
+shots/
+# Generated at build time from the TMDB_READ_TOKEN secret. Never commit.
+MARQUEE/Services/Secrets.swift

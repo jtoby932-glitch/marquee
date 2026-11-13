@@ -1,0 +1,55 @@
+{
+ "id": 438631,
+ "title": "Dune",
+ "original_title": "Dune",
+ "release_date": "2021-09-15",
+ "overview": "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people.",
+ "runtime": 155,
+ "genres": [
+  {
+   "id": 878,
+   "name": "Science Fiction"
+  },
+  {
+   "id": 12,
+   "name": "Adventure"
+  }
+ ],
+ "poster_path": "/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
+ "backdrop_path": "/jYEW5xZkZk2WTrdbMGAPFuBqbDc.jpg",
+ "credits": {
+  "crew": [
+   {
+    "name": "Denis Villeneuve",
+    "job": "Director"
+   },
+   {
+    "name": "Hans Zimmer",
+    "job": "Original Music Composer"
+   }
+  ]
+ },
+ "release_dates": {
+  "results": [
+   {
+    "iso_3166_1": "US",
+    "release_dates": [
+     {
+      "certification": "PG-13"
+     }
+    ]
+   },
+   {
+    "iso_3166_1": "GB",
+    "release_dates": [
+     {
+      "certification": ""
+     },
+     {
+      "certification": "12A"
+     }
+    ]
+   }
+  ]
+ }
+}
