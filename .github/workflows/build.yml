@@ -15,7 +15,7 @@ env:
 jobs:
   test:
     name: Tests (unit, UI journeys, accessibility audits)
-    runs-on: macos-15
+    runs-on: macos-15-intel
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
@@ -61,7 +61,7 @@ jobs:
   ipa:
     name: Unsigned IPA and release
     needs: test
-    runs-on: macos-15
+    runs-on: macos-15-intel
     timeout-minutes: 40
     permissions:
       contents: write
@@ -120,7 +120,7 @@ jobs:
     name: Screenshots (demo data, three sizes)
     # After tests, so a failed build doesn't spend Mac minutes twice.
     needs: test
-    runs-on: macos-15
+    runs-on: macos-15-intel
     timeout-minutes: 60
     permissions:
       contents: write
