@@ -69,12 +69,8 @@ struct SettingsView: View {
             .listRowBackground(theme.surface1)
 
             Section {
-                Button { router.push(.about) } label: {
-                    HStack {
-                        Text("About MARQUEE").foregroundStyle(theme.textPrimary)
-                        Spacer()
-                        Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(theme.textTertiary)
-                    }
+                NavigationLink(value: Route.about) {
+                    Text("About MARQUEE").foregroundStyle(theme.textPrimary)
                 }
                 .accessibilityIdentifier("settings.about")
             } footer: {

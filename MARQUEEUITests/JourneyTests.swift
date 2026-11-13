@@ -84,9 +84,11 @@ final class JourneyTests: XCTestCase {
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap()
         field.typeText("dune")
-        let row = app.buttons["search.result.ol-OL893415W"]
-        XCTAssertTrue(row.waitForExistence(timeout: 8))
-        row.swipeRight()
+        let result = app.buttons["search.result.ol-OL893415W"]
+        XCTAssertTrue(result.waitForExistence(timeout: 8))
+        // Swipe the list cell itself, not the button inside it.
+        let cell = app.cells.containing(.button, identifier: "search.result.ol-OL893415W").firstMatch
+        (cell.exists ? cell : result).swipeRight(velocity: .fast)
         // A short swipe reveals the action; a long one adds straight away.
         let wantTo = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Want to read")).firstMatch
         if wantTo.waitForExistence(timeout: 2) { wantTo.tap() }
@@ -112,7 +114,7 @@ final class JourneyTests: XCTestCase {
         app.buttons["home.avatar"].tapCentre()
         let about = app.buttons["settings.about"]
         XCTAssertTrue(app.scrollUntilVisible(about), "About is at the bottom of Settings")
-        about.tapCentre()
+        about.tap()
         let version = app.buttons["about.version"]
         XCTAssertTrue(version.waitForExistence(timeout: 10), "About opens")
         for _ in 0..<6 { version.tap() }
