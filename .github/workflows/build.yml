@@ -44,18 +44,29 @@ jobs:
             -scheme MARQUEE \
             -destination "id=${{ steps.sim.outputs.udid }}" \
             -resultBundlePath TestResults.xcresult \
-            CODE_SIGNING_ALLOWED=NO \
-            2>&1 | tee test.log | grep -E "error:|warning: .*MARQUEE/|Test Case .* (passed|failed)|Executed|BUILD|TEST" || true
+            CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO DEVELOPMENT_TEAM= \
+            > test.log 2>&1 || true
           grep -q "TEST SUCCEEDED" test.log
+
+      - name: Explain test failures
+        if: failure()
+        run: |
+          echo "::group::Failures"
+          grep -v "CoreData" test.log | grep -E -A4 "error:|Testing failed|Failing tests|Test Case .* failed|crashed|encountered an error|Restarting after" | head -300 || true
+          echo "::endgroup::"
+          echo "::group::Last 120 lines"
+          grep -v "CoreData" test.log | tail -120
+          echo "::endgroup::"
+          echo "::group::Summary"
+          grep -E "Test Case .* (passed|failed)|Executed" test.log | tail -80
+          echo "::endgroup::"
 
       - name: Upload test log and results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: |
-            test.log
-            TestResults.xcresult
+          path: test.log
           retention-days: 14
 
   ipa:
