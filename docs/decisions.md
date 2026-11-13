@@ -19,4 +19,4 @@
 | 2026-11-13 | Recent searches kept in UserDefaults | Small, disposable, never leaves the phone | SwiftData model (needs a migration) |
 | 2026-11-13 | UI journeys run on the standard simulator; all three sizes are covered by screenshots | Running every journey three times would triple CI time | Matrix of three simulators |
 | 2026-11-13 | CI runs on `macos-15-intel` | The arm64 `macos-15` pool hit capacity limits on the first run (job never acquired a runner); the Intel pool is separate and has 4 cores | Wait and re-run on arm64 |
-| 2026-11-13 | Repo is private, like PRIME | Toby's choice; it shares ~200 Mac build minutes a month with PRIME, so screenshots only run after green tests | Public repo (unlimited minutes) |
+| 2026-11-13 | Repo made public (was private) | Private repos share ~200 free Mac minutes a month with PRIME and the first runs used nearly all of November's; public repos have unlimited minutes. No secrets or personal data are in the repo | Pay per minute, or wait for 1 December |
